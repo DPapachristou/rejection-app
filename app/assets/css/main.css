@@ -1,2 +1,7 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-gray: #2B2B2B;
+  --color-custom-gray: #636e72;
+  --color-testimonial-bg: #FBE4AB;
+}
