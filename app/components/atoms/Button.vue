@@ -1,7 +1,7 @@
 <template>
   <div>
     <button 
-    class="bg-green-500 py-2 px-6 rounded-lg shadow"
+    class="bg-green-500 py-2 px-6 rounded-lg shadow hover:bg-green-600 cursor-pointer"
     @click="handleClick('clicked')"
     >
       <slot />
