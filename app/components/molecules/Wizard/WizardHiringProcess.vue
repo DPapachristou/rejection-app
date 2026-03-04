@@ -37,9 +37,22 @@ const wizardStore = useWizardStore();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
+const errors = ref({});
 
 const handleNext = () => {
+  errors.value = {};
+  let isValid = true;
+
+  fields.value.forEach(field => {
+    if (field.required && !field.value) {
+      errors.value[field.id] = 'This field is required';
+      isValid = false;
+    }
+  });
+
+  if (isValid) {
   wizardStore.setWizardCurrentStep('Salary & Benefits');
+  }
 };
 
 const handlePrevious = () => {

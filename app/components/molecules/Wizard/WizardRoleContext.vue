@@ -13,6 +13,7 @@
         {{ field.label }}   
        </label>
        <Input 
+       :error="errors"
        v-model="field.value"
        :placeholder="field.placeholder" 
        :type="field.type"
@@ -35,11 +36,25 @@ const wizardStore = useWizardStore();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
+const errors = ref({});
+const isValid = ref(true);
 
-wizardStore.setWizardCurrentStep(currentStep.value);
 
 const handleNext = () => {
+  errors.value = {};
+
+  let isValid = true;
+
+  fields.value.forEach(field => {
+    if (field.required && !field.value) {
+      errors.value[field.id] = 'This field is required';
+      isValid = false;
+    }
+  });
+
+  if (isValid) {
   wizardStore.setWizardCurrentStep('Hiring Process');
+  }
 };
 
 </script>

@@ -47,11 +47,11 @@ export const useWizardStore = defineStore("wizard", {
       { id: 'feedback', label: 'Feedback Received? (select)', placeholder: 'Select Feedback', options: ['Positive', 'Negative', 'Neutral', 'None'], value: '', type: 'dropdown', required: true },
       { id: 'notes', label: 'If yes what specific feedback?', placeholder: 'Enter any additional notes or comments', value: '', type: 'textarea'}],
       'Salary & Benefits': [
-      { id: 'salary discussed', label: 'Did compensation come up? (yes/no)', placeholder: 'Select Option', options: ['Yes', 'No'], value: '', type: 'dropdown' },
-      { id: 'currency', label: 'Currency:', placeholder: 'e.g. USD, EUR', value: '', type: 'input', required: (fields) => fields['salary discussed']?.value === 'Yes' },
-      { id: 'period', label: 'Period (monthly/yearly): ', placeholder: 'Enter Benefits Offered', value: '', type: 'textarea', required: (fields) => fields['salary discussed']?.value === 'Yes' },
-      { id: 'salaryType', label: 'Gross / Net:',  placeholder: 'Select Option', options: ['Gross', 'Net'], value: '', type: 'dropdown', required: (fields) => fields['salary discussed']?.value === 'Yes' },
-      {id: 'amount', label: 'Please enter the requested amount:', placeholder: 'Enter Amount', value: '', type: 'input', required: (fields) => fields['salary discussed']?.value === 'Yes' },
+      { id: 'salary discussed', label: 'Did compensation come up? (yes/no)', placeholder: 'Select Option', options: ['Yes', 'No'], value: '', type: 'dropdown', required: true },
+      { id: 'currency', label: 'Currency:', placeholder: 'e.g. USD, EUR', value: '', type: 'input' },
+      { id: 'period', label: 'Period (Monthly/Yearly): ', placeholder: 'Enter Benefits Offered', options: ['Monthly', 'Yearly'], value: '', type: 'dropdown'},
+      { id: 'salaryType', label: 'Gross / Net:',  placeholder: 'Select Option', options: ['Gross', 'Net'], value: '', type: 'dropdown'},
+      {id: 'amount', label: 'Please enter the requested amount:', placeholder: 'Enter Amount', value: '', type: 'input', validationType: 'number' },
       ],
       'Job Description': [
       { id: 'job description', label: 'Share the job ad description here:', placeholder: 'Enter Job Description', value: '', type: 'textarea' },

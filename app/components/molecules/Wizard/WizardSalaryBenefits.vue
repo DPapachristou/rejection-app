@@ -12,7 +12,8 @@
     >
         {{ field.label }}   
        </label>
-       <Input 
+       <Input
+       :error="errors"
        v-model="field.value"
        :placeholder="field.placeholder" 
        :type="field.type"
@@ -29,7 +30,6 @@
 
 <script setup>
 import Input from '~/components/atoms/Input.vue';
-import { computed } from 'vue';
 import { useWizardStore } from '~/stores/wizard';  
 import Button from '~/components/atoms/Button.vue';
 
@@ -37,9 +37,43 @@ const wizardStore = useWizardStore();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
+const errors = ref({});
 
 const handleNext = () => {
+  errors.value = {};
+
+  let isValid = true;
+
+  const salaryDiscussedField = fields.value.find(f => f.id === 'salary discussed');
+  const isSalaryYes = salaryDiscussedField?.value === 'Yes';
+
+  if (salaryDiscussedField?.value === 'No') {
+      isValid = true;
+  }
+
+  fields.value.forEach(field => {
+    if (field.required && !field.value) {
+      errors.value[field.id] = 'This field is required';
+      isValid = false;
+    }
+
+    const conditionalFields = ['currency', 'amount', 'period', 'salaryType'];
+
+    if (isSalaryYes && conditionalFields.includes(field.id) && !field.value) {
+      errors.value[field.id] = 'Please fill this field since salary was discussed';
+      isValid = false;
+    }
+    if (field.validationType === 'number') {
+        if (isNaN(field.value)) {
+          errors.value[field.id] = 'Please enter a valid number';
+          isValid = false;
+        }
+    }
+  });
+
+  if (isValid) {
   wizardStore.setWizardCurrentStep('Job Description');
+  }
 };
 
 const handlePrevious = () => {
