@@ -29,7 +29,6 @@
 
 <script setup>
 import Input from '~/components/atoms/Input.vue';
-import { computed } from 'vue';
 import { useWizardStore } from '~/stores/wizard';  
 import Button from '~/components/atoms/Button.vue';
 

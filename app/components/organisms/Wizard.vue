@@ -4,7 +4,6 @@
 
 <script setup>
 import { useWizardStore } from '../../stores/wizard.js';
-import { computed } from 'vue';
 import WizardRoleContext from '../molecules/Wizard/WizardRoleContext.vue';  
 import WizardHiringProcess from '../molecules/Wizard/WizardHiringProcess.vue';
 import WizardSalaryBenefits from '../molecules/Wizard/WizardSalaryBenefits.vue';

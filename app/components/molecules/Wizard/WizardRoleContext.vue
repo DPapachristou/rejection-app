@@ -13,7 +13,8 @@
         {{ field.label }}   
        </label>
        <Input 
-       :error="errors"
+       @update:modelValue="field.id === 'country' ? handleCountryChange($event) : null"
+       :error="errors[field.id]"
        v-model="field.value"
        :placeholder="field.placeholder" 
        :type="field.type"
@@ -28,17 +29,26 @@
 
 <script setup>
 import Input from '~/components/atoms/Input.vue';
-import { computed } from 'vue';
 import { useWizardStore } from '~/stores/wizard';  
 import Button from '~/components/atoms/Button.vue';
+import { getParamByISO } from 'iso-country-currency';
+import countries from 'i18n-iso-countries';
 
 const wizardStore = useWizardStore();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
 const errors = ref({});
-const isValid = ref(true);
 
+const handleCountryChange = (countryName) => {
+  const countryCode = countries.getAlpha2Code(countryName, 'en');
+  
+  if (countryCode) {
+    const currency = getParamByISO(countryCode, 'currency');
+    
+    wizardStore.setFieldValue('Salary & Benefits', 'currency', currency);
+  }
+};
 
 const handleNext = () => {
   errors.value = {};

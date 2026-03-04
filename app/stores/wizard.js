@@ -1,4 +1,10 @@
 import { defineStore } from "pinia";
+import countries from 'i18n-iso-countries';
+import enLocale from 'i18n-iso-countries/langs/en.json';
+
+countries.registerLocale(enLocale);
+
+const allCountries = Object.values(countries.getNames("en", { select: "official" })).sort();
 
 export const useWizardStore = defineStore("wizard", {
   state: () => ({
@@ -39,7 +45,7 @@ export const useWizardStore = defineStore("wizard", {
       'Role Context':[
       { id: 'role', label: 'Role Title:', placeholder: 'Enter Role Title', value: '', type: 'input', required: true },
       { id: 'industry', label: 'Industry:', placeholder: 'Enter Industry', value: '', type: 'input', required: true },
-      { id: 'country', label: 'Country:', placeholder: 'e.g. United States', value: '', type: 'input', required: true },
+      { id: 'country', label: 'Country:', placeholder: 'Select Country', value: '', type: 'dropdown', options: allCountries, required: true },
       { id: 'experience level', label: 'Experience Level:', placeholder: 'Select Experience Level', options: ['Entry Level', 'Mid Level', 'Senior Level', 'Executive'], value: '', type: 'select', required: true },
       ],
       'Hiring Process': [
@@ -64,8 +70,14 @@ export const useWizardStore = defineStore("wizard", {
   actions: {
     setWizardCurrentStep(stepId) {
       this.currentStep = stepId;
+      },
+    setFieldValue(stepId, fieldId, newValue) {
+      const field = this.fields[stepId].find(f => f.id === fieldId);
+      if (field) {
+        field.value = newValue;
       }
     },
+  },
   getters: {
       getWizardCurrentStep(state) {
         return state.currentStep;

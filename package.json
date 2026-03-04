@@ -12,14 +12,13 @@
   "dependencies": {
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.1.18",
-    "@vee-validate/zod": "^4.15.1",
+    "i18n-iso-countries": "^7.14.0",
+    "iso-country-currency": "^0.7.2",
     "nuxt": "^4.3.0",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.1.18",
-    "vee-validate": "^4.15.1",
     "vue": "^3.5.27",
-    "vue-router": "^4.6.4",
-    "zod": "^4.3.6"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "sass": "^1.97.3"
