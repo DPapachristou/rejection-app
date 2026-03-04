@@ -2,9 +2,21 @@
     <select 
       v-if="type === 'dropdown' || type === 'select'"
       @change="$emit('update:modelValue', $event.target.value)"
-      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 text-gray-900 shadow-sm"
+      :placeholder="placeholder"
+      :value="modelValue"
+      :class="[
+        'bg-gray-50 border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 text-gray-900 shadow-sm',
+         error 
+         ? 'border-red-500' 
+         : 'border-gray-300'
+         ]"
     >
-      <option value="" disabled selected class="text-gray-900">{{ placeholder }}</option>
+      <option 
+      value="" 
+      disabled class="text-gray-900"
+      >
+      {{ placeholder }}
+      </option>
       <option v-for="opt in option" :key="opt" :value="opt">
         {{ opt }}
       </option>
@@ -14,15 +26,17 @@
       v-else-if="type === 'textarea'"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"
-      class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5 shadow-sm text-gray-900"
+      :value="modelValue"
+      :class="['bg-gray-50 border text-sm rounded-lg block w-full p-2.5 shadow-sm text-gray-900 h-full h-max-110', error ? 'border-red-500' : 'border-gray-300']"
     ></textarea>
 
     <input 
       v-else
       :type="type"
+      :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"
-      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 text-gray-900 shadow-sm"
+      :class="['bg-gray-50 border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 text-gray-900 shadow-sm', error ? 'border-red-500' : 'border-gray-300']"
     />
 </template>
 
@@ -40,7 +54,16 @@ defineProps({
   option: {
     type: Array,
     default: () => []
+  },
+  modelValue: {
+    type: [String, Number],
+    default: ''
+  },
+  error: {
+    type: String,
+    default: ''
   }
 });
+
 
 </script>

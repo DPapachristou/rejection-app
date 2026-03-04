@@ -13,6 +13,7 @@
         {{ field.label }}   
        </label>
        <Input 
+       v-model="field.value"
        :placeholder="field.placeholder" 
        :type="field.type"
        :option="field.options"
