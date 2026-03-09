@@ -1,3 +1,8 @@
 <template>
-  <h1>Index page</h1>
+  <Processing />
 </template>
+
+<script setup>
+import Processing from '../components/organisms/Processing/Processing.vue'
+
+</script>

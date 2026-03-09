@@ -1,3 +1,8 @@
 <template>
-  <h1>Index page</h1>
+  <Error />
 </template>
+
+<script setup>
+import Error from '../components/organisms/Error.vue'
+
+</script>
