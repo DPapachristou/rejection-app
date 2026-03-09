@@ -22,7 +22,7 @@
 
 </div>
 <div class="flex flex-row items-center justify-between w-full">
-<Button @click="handlePrevious" class="self-start mt-5">Previous Step</Button>
+<Button @click="handlePrevious" class="self-start mt-5" is-back-button="true">Previous Step</Button>
 <Button @click="handleNext" class="self-end mt-5">Next Step</Button>
 </div>
 </template>

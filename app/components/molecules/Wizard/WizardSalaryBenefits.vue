@@ -5,7 +5,7 @@
 <div class="w-full bg-gray-200 rounded-full dark:bg-white/20">
       <div class="bg-green-600 h-2.5 rounded-full" style="width: 60%"></div>
 </div>
-<div class="flex flex-col w-full">
+  <div class="flex flex-col w-full">
     <div v-for="field in fields" :key="field.id" class="w-full py-5">
       <label 
       class="block mb-2 text-lg font-large text-gray-900 dark:text-white text-left"
@@ -13,17 +13,19 @@
         {{ field.label }}   
        </label>
        <Input
-       :error="errors"
+       :error="errors[field.id]"
        v-model="field.value"
        :placeholder="field.placeholder" 
        :type="field.type"
        :option="field.options"
        />
-</div>
-
+       <p v-if="errors[field.id]" class="mt-1 text-md text-red-200 text-left">
+       {{ errors[field.id] }}
+       </p>
+  </div>
 </div>
 <div class="flex flex-row items-center justify-between w-full">
-<Button @click="handlePrevious" class="self-start mt-5">Previous Step</Button>
+<Button @click="handlePrevious" class="self-start mt-5" is-back-button="true">Previous Step</Button>
 <Button @click="handleNext" class="self-end mt-5">Next Step</Button>
 </div>
 </template>
@@ -64,7 +66,7 @@ const handleNext = () => {
       isValid = false;
     }
     if (field.validationType === 'number') {
-        if (isNaN(field.value)) {
+        if (field.value && isNaN(field.value)) {
           errors.value[field.id] = 'Please enter a valid number';
           isValid = false;
         }

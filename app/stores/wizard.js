@@ -49,7 +49,7 @@ export const useWizardStore = defineStore("wizard", {
       { id: 'experience level', label: 'Experience Level:', placeholder: 'Select Experience Level', options: ['Entry Level', 'Mid Level', 'Senior Level', 'Executive'], value: '', type: 'select', required: true },
       ],
       'Hiring Process': [
-      { id: 'stage', label: 'Stage (select):', placeholder: 'Select Stage', options: ['Phone Screening', 'HR Interview', 'Technical test or assessment' , 'Interview with hiring manager / team lead', 'Final interview - Senior Management', 'Offer'], value: '', type: 'dropdown', required: true },
+      { id: 'stage', label: 'Stage Reached (select):', placeholder: 'Select Stage', options: ['Phone Screening', 'HR Interview', 'Technical test or assessment' , 'Interview with hiring manager / team lead', 'Final interview - Senior Management', 'Offer'], value: '', type: 'dropdown', required: true },
       { id: 'feedback', label: 'Feedback Received? (select)', placeholder: 'Select Feedback', options: ['Positive', 'Negative', 'Neutral', 'None'], value: '', type: 'dropdown', required: true },
       { id: 'notes', label: 'If yes what specific feedback?', placeholder: 'Enter any additional notes or comments', value: '', type: 'textarea'}],
       'Salary & Benefits': [

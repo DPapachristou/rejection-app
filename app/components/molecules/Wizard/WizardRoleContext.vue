@@ -20,6 +20,9 @@
        :type="field.type"
        :option="field.options"
        />
+       <p v-if="errors[field.id]" class="mt-1 text-md text-red-200 text-left">
+       {{ errors[field.id] }}
+       </p>
 </div>
 
 </div>
