@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-brand-gray flex flex-col items-center min-h-dvh h-screen overflow-hidden">
+  <div class="bg-brand-gray flex flex-col items-center min-h-dvh">
     <span class="py-4 text-white">WhyRejected Logo</span>
     <div class="w-3/4 h-px bg-gray-500/40"></div>
-    <div class="flex-1 w-full flex flex-col items-center">
+    <div class="flex-1 w-full flex flex-col items-center justify-center">
       <slot />
     </div>
     <div class="w-3/4 h-px bg-gray-500/40"></div>

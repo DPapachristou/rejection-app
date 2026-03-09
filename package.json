@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/device": "^4.0.0",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.1.18",
     "i18n-iso-countries": "^7.14.0",
