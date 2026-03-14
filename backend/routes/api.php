@@ -9,3 +9,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/wizard/submit', [WizardController::class, 'submit']);
+Route::post('/wizard/analysis', [WizardController::class, 'saveAnalysis']);
+Route::get('/wizard/submission/{id}', [WizardController::class, 'getSubmission']);

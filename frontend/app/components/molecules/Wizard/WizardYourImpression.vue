@@ -23,24 +23,40 @@
 </div>
 <div class="flex flex-row items-center justify-between w-full">
 <Button @click="handlePrevious" class="self-start mt-5" is-back-button="true">Previous Step</Button>
-<Button @click="handleNext" class="self-end mt-5">Complete</Button>
+<Button @click="handleNext" class="self-end mt-5" :disabled="isLoading">Complete</Button>
 </div>
 </template>
 
 <script setup>
 import Input from '~/components/atoms/Input.vue';
-import { computed } from 'vue';
-import { useWizardStore } from '~/stores/wizard';  
+import { useWizardStore } from '~/stores/wizard';
+import { useWizard } from '~/composables/useWizard';
 import Button from '~/components/atoms/Button.vue';
+import { computed, ref } from 'vue';
 
+const isLoading = ref(false)
 const wizardStore = useWizardStore();
+const { submitWizard } = useWizard();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
 
-const handleNext = () => {
-  wizardStore.setWizardCurrentStep('Done');
-};
+const router = useRouter()
+
+const handleNext = async () => {
+  isLoading.value = true
+  router.push('/processing')
+  
+  try {
+    const result = await submitWizard(wizardStore.fields)
+    router.push(`/done/${result.id}`)
+  } catch (error) {
+    console.error('Submit error:', error)
+    router.push('/error')
+  } finally {
+    isLoading.value = false
+  }
+}
 
 const handlePrevious = () => {
   wizardStore.setWizardCurrentStep('Job Description');

@@ -11,5 +11,6 @@ class Submission extends Model
         'stage', 'feedback', 'notes',
         'salary_discussed', 'currency', 'period', 'salary_type', 'amount',
         'job_description', 'overall_impression',
+        'analysis',
     ];
 }
