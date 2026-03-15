@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-brand-gray: #2B2B2B;

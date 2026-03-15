@@ -45,11 +45,10 @@ const router = useRouter()
 
 const handleNext = async () => {
   isLoading.value = true
-  router.push('/processing')
-  
+    
   try {
     const result = await submitWizard(wizardStore.fields)
-    router.push(`/done/${result.id}`)
+    router.push(`/processing/${result.id}`)
   } catch (error) {
     console.error('Submit error:', error)
     router.push('/error')

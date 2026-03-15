@@ -12,6 +12,36 @@
 
 <script setup>
 import style from './Processing.module.scss'
+import { onMounted, onUnmounted } from 'vue'
 
+const config = useRuntimeConfig()
+const route = useRoute()
+const router = useRouter()
+const id = route.params.id
 
+let interval = null
+
+const checkAnalysis = async () => {
+  try {
+    const result = await $fetch(`${config.public.apiBase}/api/wizard/submission/${id}`, {
+      headers: { 'Accept': 'application/json' }
+    })
+
+    if (result.analysis) {
+      clearInterval(interval)
+      router.push(`/results/${id}`)
+    }
+  } catch (error) {
+    clearInterval(interval)
+    router.push('/error')
+  }
+}
+
+onMounted(() => {
+  interval = setInterval(checkAnalysis, 3000)
+})
+
+onUnmounted(() => {
+  clearInterval(interval)
+})
 </script>
