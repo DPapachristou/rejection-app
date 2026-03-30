@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@tailwindcss/typography": "^0.5.19",
-    "marked": "^17.0.4",
-    "tailwind-scrollbar": "^4.0.2"
-  }
-}
