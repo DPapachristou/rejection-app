@@ -23,7 +23,7 @@
 </div>
 <div class="flex flex-row items-center justify-between w-full">
 <Button @click="handlePrevious" class="self-start mt-5" is-back-button="true">Previous Step</Button>
-<Button @click="handleNext" class="self-end mt-5" :disabled="isLoading">Complete</Button>
+<Button @click="handleNext" class="self-end mt-5">Complete</Button>
 </div>
 </template>
 
@@ -32,29 +32,19 @@ import Input from '~/components/atoms/Input.vue';
 import { useWizardStore } from '~/stores/wizard';
 import { useWizard } from '~/composables/useWizard';
 import Button from '~/components/atoms/Button.vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
-const isLoading = ref(false)
 const wizardStore = useWizardStore();
-const { submitWizard } = useWizard();
+const { startSubmission } = useWizard();
 const fields = computed(() => wizardStore.getCurrentStepFields);
 const currentStep = computed(() => wizardStore.getWizardCurrentStep);
 const stepData = computed(() => wizardStore.getWizardStepData);
 
 const router = useRouter()
 
-const handleNext = async () => {
-  isLoading.value = true
-    
-  try {
-    const result = await submitWizard(wizardStore.fields)
-    router.push(`/processing/${result.id}`)
-  } catch (error) {
-    console.error('Submit error:', error)
-    router.push('/error')
-  } finally {
-    isLoading.value = false
-  }
+const handleNext = () => {
+  startSubmission(wizardStore.fields)
+  router.push('/processing')
 }
 
 const handlePrevious = () => {

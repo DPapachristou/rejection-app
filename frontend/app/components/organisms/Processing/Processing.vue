@@ -12,36 +12,26 @@
 
 <script setup>
 import style from './Processing.module.scss'
-import { onMounted, onUnmounted } from 'vue'
+import { watch } from 'vue'
+import { useWizardStore } from '~/stores/wizard'
 
-const config = useRuntimeConfig()
-const route = useRoute()
 const router = useRouter()
-const id = route.params.id
+const wizardStore = useWizardStore()
 
-let interval = null
-
-const checkAnalysis = async () => {
-  try {
-    const result = await $fetch(`${config.public.apiBase}/api/wizard/submission/${id}`, {
-      headers: { 'Accept': 'application/json' }
-    })
-
-    if (result.analysis) {
-      clearInterval(interval)
-      router.push(`/results/${id}`)
-    }
-  } catch (error) {
-    clearInterval(interval)
-    router.push('/error')
-  }
+// If navigated here without a pending submission, redirect home
+if (!wizardStore.submissionStatus || wizardStore.submissionStatus === 'done') {
+  router.replace('/')
 }
 
-onMounted(() => {
-  interval = setInterval(checkAnalysis, 3000)
-})
-
-onUnmounted(() => {
-  clearInterval(interval)
-})
+watch(
+  () => wizardStore.submissionStatus,
+  (status) => {
+    if (status === 'done') {
+      router.push(`/results/${wizardStore.submissionResult.id}`)
+    } else if (status === 'error') {
+      router.push('/error')
+    }
+  },
+  { immediate: true }
+)
 </script>

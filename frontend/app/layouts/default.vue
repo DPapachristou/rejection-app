@@ -1,6 +1,6 @@
 <template>
   <div class="bg-brand-gray flex flex-col items-center min-h-dvh">
-    <img src="/icons/genielogo.svg" alt="Genie Logo" class="w-25 h-25" />
+    <NuxtLink to="/"><img src="/icons/genielogo.svg" alt="Genie Logo" class="w-25 h-25 cursor-pointer" /></NuxtLink>
     <div class="w-3/4 h-px bg-gray-500/40"></div>
     <div class="flex-1 w-full flex flex-col items-center justify-center">
       <slot />

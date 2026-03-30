@@ -1,7 +1,11 @@
+import { useWizardStore } from '~/stores/wizard'
+
 export const useWizard = () => {
   const config = useRuntimeConfig()
 
   const submitWizard = async (fields) => {
+    const wizardStore = useWizardStore()
+
     const payload = {
       // Role Context
       role:             fields['Role Context'].find(f => f.id === 'role')?.value,
@@ -24,6 +28,25 @@ export const useWizard = () => {
       overall_impression: fields['Your Impression'].find(f => f.id === 'overall impression')?.value,
     }
 
+    const cvFile = wizardStore.cvFile
+
+    if (cvFile) {
+      const formData = new FormData()
+      for (const [key, value] of Object.entries(payload)) {
+        if (value != null) {
+          formData.append(key, value)
+        }
+      }
+      formData.append('cv', cvFile)
+
+      const response = await $fetch(`${config.public.apiBase}/api/wizard/submit`, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      return response
+    }
+
     const response = await $fetch(`${config.public.apiBase}/api/wizard/submit`, {
       method: 'POST',
       body: payload,
@@ -33,5 +56,18 @@ export const useWizard = () => {
     return response
   }
 
-  return { submitWizard }
+  const startSubmission = (fields) => {
+    const wizardStore = useWizardStore()
+    wizardStore.setSubmissionPending()
+
+    submitWizard(fields)
+      .then((result) => {
+        wizardStore.setSubmissionDone(result)
+      })
+      .catch((error) => {
+        wizardStore.setSubmissionError(error)
+      })
+  }
+
+  return { submitWizard, startSubmission }
 }

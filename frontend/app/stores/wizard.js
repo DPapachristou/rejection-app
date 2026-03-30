@@ -8,7 +8,11 @@ const allCountries = Object.values(countries.getNames("en", { select: "official"
 
 export const useWizardStore = defineStore("wizard", {
   state: () => ({
+    cvFile: null,
     currentStep: 'Role Context',
+    submissionStatus: null, // null | 'pending' | 'done' | 'error'
+    submissionResult: null,
+    submissionError: null,
     steps: [
         {
           id: 'Role Context',
@@ -71,6 +75,22 @@ export const useWizardStore = defineStore("wizard", {
     setWizardCurrentStep(stepId) {
       this.currentStep = stepId;
       },
+    setCvFile(file) {
+      this.cvFile = file;
+    },
+    setSubmissionPending() {
+      this.submissionStatus = 'pending'
+      this.submissionResult = null
+      this.submissionError = null
+    },
+    setSubmissionDone(result) {
+      this.submissionStatus = 'done'
+      this.submissionResult = result
+    },
+    setSubmissionError(error) {
+      this.submissionStatus = 'error'
+      this.submissionError = error
+    },
     setFieldValue(stepId, fieldId, newValue) {
       const field = this.fields[stepId].find(f => f.id === fieldId);
       if (field) {
