@@ -27,8 +27,15 @@ watch(
   () => wizardStore.submissionStatus,
   (status) => {
     if (status === 'done') {
-      router.push(`/results/${wizardStore.submissionResult.id}`)
+      const resultId = wizardStore.submissionResult.id
+
+      wizardStore.$reset()
+
+      router.push(`/results/${resultId}`)
     } else if (status === 'error') {
+
+      wizardStore.$reset()
+      
       router.push('/error')
     }
   },
