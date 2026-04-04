@@ -2,7 +2,7 @@
   <div>
     <button 
     :class="['py-2 px-6 rounded-lg shadow cursor-pointer', 
-    isBackButton ? 'bg-orange-400 hover:bg-orange-500' : 'bg-green-500 hover:bg-green-600',
+    isBackButton ? 'bg-orange-400 hover:bg-orange-500' : 'bg-[rgba(214,170,83,0.8)] hover:bg-[rgba(212,168,83,0.25)]',
     disabled ? 'opacity-50 cursor-not-allowed' : ''
     ]"
     @click="handleClick('clicked')"

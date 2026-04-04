@@ -1,39 +1,48 @@
 <template>
-    <h3 class="text-4xl text-white">{{ currentStep }}</h3>
-    <span class="text-xl text-white/40">{{ stepData?.description }}</span>
-    <img :src="stepData?.icon" alt="Quote-Logo" class="w-25 h-25" />
-<div class="w-full bg-gray-200 rounded-full dark:bg-white/20">
-      <div class="bg-green-600 h-2.5 rounded-full" style="width: 60%"></div>
-</div>
-  <div class="flex flex-col w-full">
-    <div v-for="field in fields" :key="field.id" class="w-full py-5">
-      <label 
-      class="block mb-2 text-lg font-large text-gray-900 dark:text-white text-left"
-    >
-        {{ field.label }}   
-       </label>
-       <Input
-       :error="errors[field.id]"
-       v-model="field.value"
-       :placeholder="field.placeholder" 
-       :type="field.type"
-       :option="field.options"
-       />
-       <p v-if="errors[field.id]" class="mt-1 text-md text-red-200 text-left">
-       {{ errors[field.id] }}
-       </p>
+  <div class="w-full">
+    <div class="mb-8">
+      <h3 class="font-cinzel text-[28px] font-bold text-[#e8e0d4] mb-2 tracking-wide">
+        {{ currentStep }}
+      </h3>
+      <p class="text-[15px] text-white/40 font-light leading-relaxed">
+        {{ stepData?.description }}
+      </p>
+    </div>
+
+    <Card glow size="full">
+      <div class="flex flex-col">
+        <div v-for="field in fields" :key="field.id" :class="style.formGroup">
+          <label class="block text-xs font-medium text-white/40 mb-2 tracking-widest uppercase">
+            {{ field.label }}
+          </label>
+          <Input
+            :error="errors[field.id]"
+            v-model="field.value"
+            :placeholder="field.placeholder"
+            :type="field.type"
+            :option="field.options"
+          />
+          <span v-if="errors[field.id]" :class="style.errorMessage">
+           <span>✦</span> {{ errors[field.id] }}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mt-3 pt-6 border-t border-[rgba(212,168,83,0.12)]">
+        <Button @click="handlePrevious" is-back-button="true">← Previous</Button>
+        <Button @click="handleNext">Continue →</Button>
+      </div>
+    </Card>
   </div>
-</div>
-<div class="flex flex-row items-center justify-between w-full">
-<Button @click="handlePrevious" class="self-start mt-5" is-back-button="true">Previous Step</Button>
-<Button @click="handleNext" class="self-end mt-5">Next Step</Button>
-</div>
 </template>
 
 <script setup>
 import Input from '~/components/atoms/Input.vue';
 import { useWizardStore } from '~/stores/wizard';  
 import Button from '~/components/atoms/Button.vue';
+import Card from '~/components/atoms/Card/Card.vue';
+
+import style from './Wizard.module.scss';
 
 const wizardStore = useWizardStore();
 const fields = computed(() => wizardStore.getCurrentStepFields);

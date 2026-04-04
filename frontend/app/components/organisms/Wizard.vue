@@ -1,5 +1,7 @@
 <template>
-    <component :is="wizardComponentToShow" />
+    <div class="w-full md:w-[500px]">
+    <component :is="wizardComponentToShow"/>
+    </div>
 </template>
 
 <script setup>
