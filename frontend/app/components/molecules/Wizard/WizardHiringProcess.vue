@@ -18,7 +18,9 @@
        :type="field.type"
        :option="field.options"
        />
-       
+       <span v-if="errors[field.id]" class="mt-1 flex text-md text-red-200 text-left">
+       {{ errors[field.id] }}
+       </span>
 </div>
 
 </div>
@@ -59,4 +61,13 @@ const handlePrevious = () => {
   wizardStore.setWizardCurrentStep('Role Context');
 };
 
+watch(fields, (newFields) => {
+    newFields.forEach(field => {
+      if (field.value && errors.value[field.id]) {
+        delete errors.value[field.id];
+      }
+    });
+  },
+  { deep: true }
+);
 </script>
