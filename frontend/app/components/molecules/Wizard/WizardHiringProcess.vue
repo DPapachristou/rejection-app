@@ -9,7 +9,7 @@
       </p>
     </div>
 
-    <Card glow size="full" class="mb-6 flex flex-col max-h-[60vh]">
+    <Card glow size="full" class="mb-2 flex flex-col max-h-[60vh]">
       <div class="flex flex-col flex-1 overflow-y-auto pr-2">
         <div v-for="field in fields" :key="field.id" :class="style.formGroup">
           <label class="block text-xs font-medium text-white/40 mb-2 tracking-widest uppercase">

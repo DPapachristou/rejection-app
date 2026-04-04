@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="wizard">
-    <div class="w-full mx-auto max-w-xl px-6">
+    <div class="w-full mx-auto px-6">
       <Wizard />
     </div>
   </NuxtLayout>
